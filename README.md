@@ -1,3 +1,4 @@
+
 # Yellowfin Tuna Prediction Pipeline
 
 ---
@@ -179,7 +180,9 @@ Send a JSON payload to the `/predict` endpoint:
   "Latitude": -15.5,
   "Longitude": 150.2
 }
+```
 
+---
 
 ## API Output Example
 
