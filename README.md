@@ -217,20 +217,116 @@ Include performance metrics for the trained models:
 
 Best performing model: **CatBoost**
 
+---
+
 ## Test Cases
 
-The following test cases demonstrate the expected behavior of the prediction pipeline:
+Below are example test cases to validate the functionality of the prediction pipeline:
 
-| **Test Case No.** | **Input Parameters**                                                                                                                                                                                                                                          | **Expected Result**                                                                                          |
-|--------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------|
-| 1                  | Fishing_Method: Gillnet<br>Length_Frequency_Species1_cm: 50<br>Year: 2025<br>Month: 5<br>Day: 20<br>Total_Number: 500<br>Latitude: 10<br>Longitude: 75                                                                                                        | Prediction: Valid weight (e.g., 33.58 kg)<br>Feedback: Log_Total_Number was recalculated based on Total_Number. |
-| 2                  | Fishing_Method: Longline<br>Length_Frequency_Species1_cm: 75<br>Year: 2024<br>Month: 7<br>Day: 10<br>Total_Number: 200<br>Latitude: 20<br>Longitude: 80                                                                                                       | Prediction: Valid weight (e.g., 34.20 kg)<br>Feedback: Log_Total_Number was recalculated based on Total_Number. |
-| 3                  | Fishing_Method: Purse Seine<br>Length_Frequency_Species1_cm: 350<br>Year: 2030<br>Month: 12<br>Day: 31<br>Total_Number: 10000<br>Latitude: -15<br>Longitude: 120                                                                                             | Prediction: Valid weight (e.g., 37.15 kg)<br>Feedback: Log_Total_Number was recalculated based on Total_Number. |
-| 4                  | Invalid Latitude:<br>Latitude: 100 (out of range)                                                                                                                                                                                                            | Error: Latitude should be between -90 and 90.                                                               |
-| 5                  | Invalid Longitude:<br>Longitude: 200 (out of range)                                                                                                                                                                                                          | Error: Longitude should be between -180 and 180.                                                            |
-| 6                  | Empty Fields:<br>Leave all fields blank                                                                                                                                                                                                                      | Prediction: Default values used; valid prediction.                                                          |
-| 7                  | Total_Number = 0:<br>Total_Number: 0                                                                                                                                                                                                                         | Prediction: Valid weight (e.g., 50.33 kg)<br>Feedback: Total_Number is zero, no recalculation needed.        |
+### Example 1: Typical Gillnet Fishing Scenario
+- **Input**:
+  - Fishing Method: Gillnet
+  - Length Frequency Species 1 (cm): 50
+  - Year: 2025
+  - Month: 5
+  - Day: 20
+  - Total Number: 500
+  - Latitude: 10
+  - Longitude: 75
+- **Expected Result**:
+  - The form auto-calculates `Log_Total_Number` as `6.216606`.
+  - The model should predict a reasonable weight.
 
+---
+
+### Example 2: High Total Number with Purse Seine
+- **Input**:
+  - Fishing Method: Purse Seine
+  - Length Frequency Species 1 (cm): 350
+  - Year: 2030
+  - Month: 12
+  - Day: 31
+  - Total Number: 10000
+  - Latitude: -15
+  - Longitude: 120
+- **Expected Result**:
+  - `Log_Total_Number` auto-calculates to `9.210440`.
+  - Prediction should reflect a larger fish weight.
+
+---
+
+### Example 3: Minimal Values for Longline Fishing
+- **Input**:
+  - Fishing Method: Longline
+  - Length Frequency Species 1 (cm): 0
+  - Year: 2025
+  - Month: 1
+  - Day: 1
+  - Total Number: 0
+  - Latitude: 0
+  - Longitude: 0
+- **Expected Result**:
+  - `Log_Total_Number` remains `0.000000`.
+  - The model should handle zero inputs gracefully.
+
+---
+
+### Example 4: Edge Case - Latitude/Longitude Bounds
+- **Input**:
+  - Fishing Method: Gillnet
+  - Length Frequency Species 1 (cm): 80
+  - Year: 2024
+  - Month: 7
+  - Day: 10
+  - Total Number: 200
+  - Latitude: 90
+  - Longitude: 180
+- **Expected Result**:
+  - `Log_Total_Number` auto-calculates to `5.303305`.
+  - The system should validate that the latitude and longitude are within valid bounds and make a prediction.
+
+---
+
+### Example 5: Unrealistic Latitude/Longitude
+- **Input**:
+  - Fishing Method: Longline
+  - Length Frequency Species 1 (cm): 75
+  - Year: 2025
+  - Month: 6
+  - Day: 15
+  - Total Number: 300
+  - Latitude: 95
+  - Longitude: 200
+- **Expected Result**:
+  - The form submits successfully, but the server should respond with an error, indicating that latitude and longitude are out of valid bounds.
+
+---
+
+### Example 6: Missing Inputs
+- **Input**:
+  - Fishing Method: Longline
+  - Length Frequency Species 1 (cm): (Leave empty)
+  - Year: 2025
+  - Month: 5
+  - Day: 20
+  - Total Number: (Leave empty)
+  - Latitude: 10
+  - Longitude: 75
+- **Expected Result**:
+  - Missing inputs should default to `0.0` for numeric fields.
+  - The server should still provide a prediction or error message based on the defaults.
+
+---
+
+## Steps to Test
+
+1. Open the `form.html` file in a browser.
+2. Enter the test inputs in the form fields.
+3. Submit the form.
+4. Observe the result displayed (or logged in the server logs).
+5. Repeat with variations to ensure robustness.
+
+---
 
 ### API Input Example:
 Send a JSON payload to the `/predict` endpoint:
