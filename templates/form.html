@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fish Weight Prediction</title>
+</head>
+<body>
+    <h1>Fish Weight Prediction Form</h1>
+    <form id="predictionForm">
+        <label for="Fishing_Method">Fishing Method:</label>
+        <select id="Fishing_Method" name="Fishing_Method">
+            <option value="Gillnet">Gillnet</option>
+            <option value="Longline">Longline</option>
+            <option value="Purse Seine">Purse Seine</option>
+        </select><br><br>
+
+        <label for="Length_Frequency_Species1_cm">Length Frequency Species 1 (cm):</label>
+        <input type="number" step="any" id="Length_Frequency_Species1_cm" name="Length_Frequency_Species1_cm"><br><br>
+
+        <label for="Year">Year:</label>
+        <input type="number" id="Year" name="Year"><br><br>
+
+        <label for="Month">Month:</label>
+        <input type="number" id="Month" name="Month" min="1" max="12"><br><br>
+
+        <label for="Day">Day:</label>
+        <input type="number" id="Day" name="Day" min="1" max="31"><br><br>
+
+        <label for="Total_Number">Total Number:</label>
+        <input type="number" id="Total_Number" name="Total_Number"><br><br>
+
+        <label for="Latitude">Latitude:</label>
+        <input type="number" step="any" id="Latitude" name="Latitude" min="-90" max="90"><br><br>
+
+        <label for="Longitude">Longitude:</label>
+        <input type="number" step="any" id="Longitude" name="Longitude" min="-180" max="180"><br><br>
+
+        <button type="button" id="submitBtn">Predict</button>
+    </form>
+
+    <div id="result" style="display: none;">
+        <h2>Prediction Result:</h2>
+        <p id="predictionOutput"></p>
+        <p id="feedbackOutput"></p>
+    </div>
+
+    <script>
+        document.getElementById("submitBtn").addEventListener("click", async function () {
+            const form = document.getElementById("predictionForm");
+            const formData = new FormData(form);
+            const jsonData = {};
+            formData.forEach((value, key) => {
+                jsonData[key] = value;
+            });
+
+            try {
+                const response = await fetch("http://127.0.0.1:5000/predict", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(jsonData),
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    document.getElementById("result").style.display = "block";
+                    document.getElementById("predictionOutput").textContent = `Error: ${errorData.error}`;
+                    document.getElementById("feedbackOutput").textContent = "";
+                    return;
+                }
+
+                const result = await response.json();
+                document.getElementById("result").style.display = "block";
+                document.getElementById("predictionOutput").textContent = `Prediction: ${result.Prediction}`;
+                document.getElementById("feedbackOutput").textContent = `Feedback: ${result.Feedback}`;
+            } catch (error) {
+                document.getElementById("result").style.display = "block";
+                document.getElementById("predictionOutput").textContent = `Error: ${error.message}`;
+                document.getElementById("feedbackOutput").textContent = "";
+            }
+        });
+    </script>
+</body>
+</html>
