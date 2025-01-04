@@ -73,6 +73,8 @@ pip install -r requirements.txt
 
 ---
 
+---
+
 ## Usage
 
 ### Step 1: Data Preprocessing
@@ -101,6 +103,8 @@ python model_api.py
 
 ### Step 5: Web Interface
 Open `form.html` in your browser or access the app at `http://127.0.0.1:5000`.
+
+---
 
 ---
 
@@ -141,6 +145,8 @@ Open `form.html` in your browser or access the app at `http://127.0.0.1:5000`.
 
 ---
 
+---
+
 ## Directory Structure
 
 ```plaintext
@@ -162,6 +168,8 @@ yellowfin-tuna-prediction/
 ├── requirements.txt             # Dependencies
 └── README.md                    # Project documentation
 ```
+
+---
 
 ### Pipeline Architecture
 ```plaintext
@@ -190,6 +198,9 @@ Data Preprocessing --> Model Training --> Evaluation --> Deployment --> Predicti
    - User-friendly form to input data and view predictions.
    - Communicates with the Flask API in real-time.
 
+---
+
+---
 
 ## Benchmarks and Performance
 
@@ -228,6 +239,9 @@ Send a JSON payload to the `/predict` endpoint:
   "Feedback": "Log_Total_Number matches the logarithm of Total_Number."
 }
 
+---
+
+---
 
 ## FAQs
 
@@ -242,12 +256,17 @@ A3. You can use platforms like AWS, Azure, or Heroku. Start by containerizing th
 
 ---
 
+---
+
 ## Known Issues/Limitations
 
 - The model currently assumes the input data is well-formatted; unexpected formats may lead to errors.
 - Predictions may be less accurate for extreme outliers or missing features.
 - Web form input validation is basic and should be enhanced for production use.
 
+---
+
+---
 
 ## Roadmap
 
@@ -261,7 +280,10 @@ A3. You can use platforms like AWS, Azure, or Heroku. Start by containerizing th
 
 ---
 
+---
 
 ## Contributing
 
 Contributions are welcome! Create issues or submit pull requests to improve the project.
+---
+
