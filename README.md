@@ -180,36 +180,37 @@ Send a JSON payload to the `/predict` endpoint:
   "Longitude": 150.2
 }
 
+
 ## API Output Example
 
 Here is an example of the API's JSON response:
-
 ```json
 {
   "Prediction": "325.45 kg",
   "Feedback": "Log_Total_Number matches the logarithm of Total_Number."
 }
+```
 
 ---
 
+## FAQs
 
-*## FAQs*
+**Q1:** Can this project be used for fish species other than Yellowfin Tuna?  
+**A1:** The current model is trained specifically for Yellowfin Tuna. To adapt it for other species, you would need to retrain the model on a relevant dataset.
 
-Q1: Can this project be used for fish species other than Yellowfin Tuna?
-A1: The current model is trained specifically for Yellowfin Tuna. To adapt it for other species, you would need to retrain the model on a relevant dataset.
+**Q2:** Why is the web form not working?  
+**A2:** Ensure the API is running (`model_api.py`) and accessible at `http://127.0.0.1:5000`.
 
-Q2: Why is the web form not working?
-A2: Ensure the API is running (model_api.py) and accessible at http://127.0.0.1:5000.
-
-Q3: How do I deploy this project on the cloud?
-A3: You can use platforms like AWS, Azure, or Heroku. Start by containerizing the app using Docker.
+**Q3:** How do I deploy this project on the cloud?  
+**A3:** You can use platforms like AWS, Azure, or Heroku. Start by containerizing the app using Docker.
 
 ---
 
-Known Issues/Limitations
-The model currently assumes the input data is well-formatted; unexpected formats may lead to errors.
-Predictions may be less accurate for extreme outliers or missing features.
-Web form input validation is basic and should be enhanced for production use.
+## Known Issues/Limitations
+
+- The model currently assumes the input data is well-formatted; unexpected formats may lead to errors.  
+- Predictions may be less accurate for extreme outliers or missing features.  
+- Web form input validation is basic and should be enhanced for production use.
 
 ---
 
@@ -217,43 +218,41 @@ Web form input validation is basic and should be enhanced for production use.
 
 The following steps outline the planned and completed features of the project:
 
-- [x] Implement preprocessing and data cleaning.
-- [x] Train and evaluate multiple models.
-- [x] Develop REST API for predictions.
-- [x] Add web form for user interaction.
-- [ ] Improve input validation in the API.
-- [ ] Add more robust error handling.
-- [ ] Deploy on cloud (AWS, Azure, etc.).
+- [x] Implement preprocessing and data cleaning.  
+- [x] Train and evaluate multiple models.  
+- [x] Develop REST API for predictions.  
+- [x] Add web form for user interaction.  
+- [ ] Improve input validation in the API.  
+- [ ] Add more robust error handling.  
+- [ ] Deploy on cloud (AWS, Azure, etc.).  
 
 ---
-
 
 ## Contributing
 
 Contributions are welcome! Here's how you can help improve the project:
 
-1. **Fork the repository**:
+1. **Fork the repository**:  
    - Click the "Fork" button in the top-right corner of the repository page.
 
-2. **Create a feature branch**:
+2. **Create a feature branch**:  
    ```bash
    git checkout -b feature-name
-Commit your changes:
+   ```
 
-bash
-Copy code
-git commit -m "Add new feature"
-Push to the branch:
+3. **Commit your changes**:  
+   ```bash
+   git commit -m "Add new feature"
+   ```
 
-bash
-Copy code
-git push origin feature-name
-Submit a pull request for review:
+4. **Push to the branch**:  
+   ```bash
+   git push origin feature-name
+   ```
 
-Open a pull request on the original repository and describe the changes you've made.
+5. **Submit a pull request for review**:  
+   Open a pull request on the original repository and describe the changes you've made.
+
 For major changes, please open an issue first to discuss what you would like to change. This helps maintainers provide feedback and ensure your contributions align with the project's goals.
 
-markdown
-Copy code
 ---
-
