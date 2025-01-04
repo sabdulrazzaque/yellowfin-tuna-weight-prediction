@@ -217,6 +217,20 @@ Include performance metrics for the trained models:
 
 Best performing model: **CatBoost**
 
+## Test Cases
+
+The following test cases demonstrate the expected behavior of the prediction pipeline:
+
+| **Test Case No.** | **Input Parameters**                                                                                                                                                                                                                                          | **Expected Result**                                                                                          |
+|--------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------|
+| 1                  | Fishing_Method: Gillnet<br>Length_Frequency_Species1_cm: 50<br>Year: 2025<br>Month: 5<br>Day: 20<br>Total_Number: 500<br>Latitude: 10<br>Longitude: 75                                                                                                        | Prediction: Valid weight (e.g., 33.58 kg)<br>Feedback: Log_Total_Number was recalculated based on Total_Number. |
+| 2                  | Fishing_Method: Longline<br>Length_Frequency_Species1_cm: 75<br>Year: 2024<br>Month: 7<br>Day: 10<br>Total_Number: 200<br>Latitude: 20<br>Longitude: 80                                                                                                       | Prediction: Valid weight (e.g., 34.20 kg)<br>Feedback: Log_Total_Number was recalculated based on Total_Number. |
+| 3                  | Fishing_Method: Purse Seine<br>Length_Frequency_Species1_cm: 350<br>Year: 2030<br>Month: 12<br>Day: 31<br>Total_Number: 10000<br>Latitude: -15<br>Longitude: 120                                                                                             | Prediction: Valid weight (e.g., 37.15 kg)<br>Feedback: Log_Total_Number was recalculated based on Total_Number. |
+| 4                  | Invalid Latitude:<br>Latitude: 100 (out of range)                                                                                                                                                                                                            | Error: Latitude should be between -90 and 90.                                                               |
+| 5                  | Invalid Longitude:<br>Longitude: 200 (out of range)                                                                                                                                                                                                          | Error: Longitude should be between -180 and 180.                                                            |
+| 6                  | Empty Fields:<br>Leave all fields blank                                                                                                                                                                                                                      | Prediction: Default values used; valid prediction.                                                          |
+| 7                  | Total_Number = 0:<br>Total_Number: 0                                                                                                                                                                                                                         | Prediction: Valid weight (e.g., 50.33 kg)<br>Feedback: Total_Number is zero, no recalculation needed.        |
+
 
 ### API Input Example:
 Send a JSON payload to the `/predict` endpoint:
